@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Список автомобилей</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+</head>
+
+<body>
+
+<div class="container my-2">
+    <h1>Список автомобилей</h1>
+
+
+    <tr th:each="point : ${user.getSimplePoints()}">
+        <p>Точка номер <span th:text="${point.ID}"></span></p>
+        <table border="1" class="table table-striped table-responsive-md">
+            <tr>
+                <th>Id</th>
+                <th>Модель</th>
+                <th>Производитель</th>
+                <th>Количество</th>
+                <th>Стоимость</th>
+                <th>Действия</th>
+            </tr>
+
+            <tr th:each="car : ${point.getCarsSimple()}">
+                <td th:text="${car.ID}">Id</td>
+                <td th:text="${car.model}">model</td>
+                <td th:text="${car.manufacturer}">manufacturer</td>
+                <td th:text="${car.quantity}">quantity</td>
+                <td th:text="${car.cost}">cost</td>
+                <td><a th:href="@{/showFormForUpdate/{ID}(ID=${car.ID})}" class="btn btn-primary">Обновить</a>
+                    <a th:href="@{/deleteCar/{ID}(ID=${car.ID})}" class="btn btn-danger">Удалить</a>
+                </td>
+            </tr>
+        </table>
+
+        <a th:href="@{/showNewCarForm/{pointID}(pointID=${point.ID})}" class="btn btn-primary btn-sm mb-3">Добавить</a>
+
+    </tr>
+</div>
+</body>
+</html>
